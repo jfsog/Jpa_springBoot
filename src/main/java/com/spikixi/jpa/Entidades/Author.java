@@ -1,18 +1,25 @@
 package com.spikixi.jpa.Entidades;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 @Entity
-@Table(name = "AUTHOR_TBL")
-public class Author {
-    @Id
-    @GeneratedValue
+public class Author extends BaseEntity {
+    //    @Id
+//    @GeneratedValue
 //            (
 //            strategy = GenerationType.TABLE,
 //            generator = "author_id_gen"
@@ -30,12 +37,12 @@ public class Author {
 //            valueColumnName = "id_value",
 //            allocationSize = 1
 //    )
-    private Integer id;
+//    private Integer id;
     @Column(
             name = "f_name",
             length = 50
     )
-    private String fristName;
+    private String firstName;
     private String lastName;
     @Column(
             unique = true,
@@ -43,14 +50,15 @@ public class Author {
     )
     private String email;
     private Integer age;
-    @Column(
-            updatable = false,
-            nullable = false
-    )
-    private LocalDateTime createdAt;
-    @Column(
-            nullable = false,
-            insertable = false
-    )
-    private LocalDateTime lastModified;
+    //    @Column(
+//            updatable = false,
+//            nullable = false
+//    )
+//    private LocalDateTime createdAt;
+//    @Column(
+//            insertable = false
+//    )
+//    private LocalDateTime lastModified;
+    @ManyToMany(mappedBy = "authors")
+    private List<Course> courses;
 }
