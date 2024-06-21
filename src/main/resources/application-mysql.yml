@@ -1,0 +1,14 @@
+#spring.application.name=jpa
+spring:
+  application:
+    name: jpa
+  datasource:
+    url: jdbc:mariadb://localhost:3306/jpa_data?creatDatabaseIfNotExist=true
+    username: spi
+    password: senha
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
+    show-sql: true
