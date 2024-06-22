@@ -1,12 +1,15 @@
 package com.spikixi.jpa;
 
-import com.spikixi.jpa.Entidades.Resources.Video;
+import com.github.javafaker.Faker;
+import com.spikixi.jpa.Entidades.Author;
 import com.spikixi.jpa.repositorios.AuthorRopository;
 import com.spikixi.jpa.repositorios.VideoRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.time.LocalDateTime;
 
 @SpringBootApplication
 public class JpaApplication {
@@ -16,20 +19,28 @@ public class JpaApplication {
     @Bean
     public CommandLineRunner commandLineRunner(AuthorRopository repository, VideoRepository videoRepository) {
         return args -> {
-            /*var a = Author.builder()
-                          .firstName("kixi")
-                          .lastName("moto")
-                          .age(25)
-                          .email("teste@email.com")
-                          .createdAt(LocalDateTime.now())
-                          .lastModifiedAt(LocalDateTime.now())
-                          .build();
-            repository.save(a);*/
-            var video = Video.builder()
-                             .name("Abc")
-                             .length(1234)
-                             .build();
-            videoRepository.save(video);
+            for (int i = 0; i < 50; i++) {
+                var fk = new Faker();
+                var author = Author.builder()
+                                   .firstName(fk.name().firstName())
+                                   .lastName(fk.name().lastName())
+                                   .age(fk.number().numberBetween(18, 80))
+                                   .email(fk.name().username() + i + "@gmail.com")
+                                   .createdAt(LocalDateTime.now())
+                                   .lastModifiedAt(LocalDateTime.now())
+                                   .build();
+                repository.save(author);
+            }
+            var author = Author.builder()
+                               .id(1)
+                               .firstName("Felipe")
+                               .lastName("Souza")
+                               .age(25)
+                               .email("teste@gmail.com")
+                               .createdAt(LocalDateTime.now())
+                               .lastModifiedAt(LocalDateTime.now())
+                               .build();
+            repository.save(author);
         };
     }
 }
