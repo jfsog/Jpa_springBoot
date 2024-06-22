@@ -8,8 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 
 import java.time.LocalDateTime;
 
@@ -33,8 +31,8 @@ public class JpaApplication {
                                    .build();
                 repository.save(author);
             }
-            repository.updateAuthor(-1,50);
-            repository.updateallAuthorsAges(101);
+//            repository.updateAuthor(-1,50);
+//            repository.updateallAuthorsAges(101);
 //            repository.findByid(1).
 //            var author = Author.builder()
 //                               .id(1)
@@ -46,6 +44,8 @@ public class JpaApplication {
 //                               .lastModifiedAt(LocalDateTime.now())
 //                               .build();
 //            repository.save(author);
+            repository.findByNamedQuery(60).forEach(System.out::println);
+            repository.updateByNamedQuery(12);
         };
     }
 }

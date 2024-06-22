@@ -1,8 +1,7 @@
 package com.spikixi.jpa.Entidades;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +16,12 @@ import java.util.List;
 @AllArgsConstructor
 @SuperBuilder
 @Entity
+@NamedQuery(
+        name = "Author.findByNamedQuery", query = "select a from Author a where a.age>= :age"
+)
+@NamedQuery(
+        name = "Author.updateByNamedQuery", query = "update Author a set a.age = :age"
+)
 public class Author extends BaseEntity {
     //    @Id
 //    @GeneratedValue
@@ -38,15 +43,14 @@ public class Author extends BaseEntity {
 //            allocationSize = 1
 //    )
 //    private Integer id;
-    @Column(
-            name = "f_name",
-            length = 50
-    )
+//    @Column(
+//            name = "f_name",
+//            length = 50
+//    )
     private String firstName;
     private String lastName;
     @Column(
-            unique = true,
-            nullable = false
+            unique = true, nullable = false
     )
     private String email;
     private Integer age;
@@ -59,6 +63,7 @@ public class Author extends BaseEntity {
 //            insertable = false
 //    )
 //    private LocalDateTime lastModified;
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "authors", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Course> courses;
 }
